@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoGaropaba - Missão Praia Limpa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="jogo-container">
+        <header class="jogo-header">
+            <h1>🌊 EcoGaropaba</h1>
+            <p>Verão em Garopaba! Clique no lixo espalhado e depois na lixeira correta.</p>
+            
+            <div class="painel-status">
+                <div class="pontos-box">Pontos: <span id="contador-pontos">0</span></div>
+                <div class="mensagem-box" id="mensagem-alerta">Ajude a limpar a praia de Garopaba!</div>
+            </div>
+        </header>
+
+        <main class="cenario-praia" id="praia">
+            
+            <div class="decoracao surfista">🏄‍♂️</div>
+            <div class="decoracao guardasol-1">⛱️</div>
+            <div class="decoracao guardasol-2">⛱️</div>
+            <div class="decoracao banhista">🧘‍♀️</div>
+            <div class="decoracao nadador">🏊‍♂️</div>
+
+            <div class="instrucao-inicial">Recolha o lixo deixado pelos turistas!</div>
+        </main>
+
+        <footer class="zona-lixeiras">
+            
+            <button class="lixeira lixeira-organico" data-tipo="organico">
+                <span class="lixeira-icone">🍏</span>
+                <span class="lixeira-nome">Orgânico</span>
+            </button>
+
+            <button class="lixeira lixeira-reciclavel" data-tipo="reciclavel">
+                <span class="lixeira-icone">🍾</span>
+                <span class="lixeira-nome">Reciclável</span>
+            </button>
+
+            <button class="lixeira lixeira-rejeito" data-tipo="rejeito">
+                <span class="lixeira-icone">🚬</span>
+                <span class="lixeira-nome">Rejeito</span>
+            </button>
+
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

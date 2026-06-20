@@ -1,0 +1,186 @@
+/* RESET E CONFIGURAÇÕES GLOBAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #eef5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* CONTAINER PRINCIPAL DO JOGO */
+.jogo-container {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* CABEÇALHO DO JOGO */
+.jogo-header {
+    background-color: #1e56a0;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.jogo-header h1 { 
+    font-size: 1.8rem; 
+    margin-bottom: 5px; 
+}
+
+.jogo-header p { 
+    font-size: 0.9rem; 
+    opacity: 0.9; 
+    margin-bottom: 15px; 
+}
+
+/* PAINEL DE PONTOS E STATUS */
+.painel-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    min-height: 54px;
+}
+
+.pontos-box {
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: #f07b3f;
+    padding: 5px 15px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.mensagem-box {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fbd46d;
+    text-align: right;
+    max-width: 75%;
+}
+
+/* CENÁRIO DA PRAIA MELHORADO */
+.cenario-praia {
+    height: 400px; /* Aumentamos o espaço para acomodar os novos elementos */
+    background: linear-gradient(to bottom, 
+        #2980b9 0%,   /* Mar profundo */
+        #3498db 35%,  /* Mar raso/ondas */
+        #f1c40f 40%,  /* Areia molhada */
+        #f39c12 55%,  /* Areia firme da praia */
+        #e67e22 100%  /* Areia seca/restinga */
+    );
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid #d35400;
+}
+
+.instrucao-inicial {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 15px;
+    border-radius: 30px;
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 0.85rem;
+    z-index: 5;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* ELEMENTOS DE DECORAÇÃO FIXOS (CENÁRIO) */
+.decoracao {
+    position: absolute;
+    user-select: none;
+    opacity: 0.9;
+    z-index: 2; /* Ficam no fundo, o lixo clicável vai aparecer na frente deles */
+}
+
+/* Posicionamento dos personagens e guarda-sóis */
+.surfista { font-size: 3rem; top: 60px; left: 15%; transform: rotate(-5deg); }
+.nadador { font-size: 2.2rem; top: 40px; right: 20px; }
+.guardasol-1 { font-size: 3.5rem; top: 180px; left: 10%; }
+.guardasol-2 { font-size: 3.5rem; top: 220px; right: 15%; }
+.banhista { font-size: 2.5rem; top: 250px; left: 35%; }
+
+/* ITENS DE LIXO GERADOS DINAMICAMENTE PELO JS */
+.lixo-item {
+    font-size: 2.5rem;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    user-select: none;
+    z-index: 10; /* Ficam por cima de tudo para garantir um clique fácil */
+}
+
+.lixo-item:hover {
+    transform: scale(1.2);
+}
+
+/* Classe de destaque quando o lixo é selecionado */
+.lixo-item.selecionado {
+    filter: drop-shadow(0 0 10px #f07b3f) brightness(1.2);
+    animation: balanco 0.5s infinite alternate;
+}
+
+@keyframes balanco {
+    from { transform: rotate(-12deg) scale(1.15); }
+    to { transform: rotate(12deg) scale(1.15); }
+}
+
+/* ZONA DAS LIXEIRAS (RODAPÉ) */
+.zona-lixeiras {
+    background: #f5f6fa;
+    padding: 25px;
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.lixeira {
+    flex: 1;
+    border: none;
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.lixeira:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.lixeira:active {
+    transform: translateY(0);
+}
+
+/* Cores oficiais da Coleta Seletiva */
+.lixeira-organico { background-color: #8b5a2b; } /* Marrom */
+.lixeira-reciclavel { background-color: #2ecc71; } /* Verde */
+.lixeira-rejeito { background-color: #7f8c8d; }    /* Cinza */
+
+.lixeira-icone { font-size: 2.2rem; }
+.lixeira-nome { font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
