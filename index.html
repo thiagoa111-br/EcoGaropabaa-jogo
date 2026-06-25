@@ -3,56 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoGaropaba - Missão Praia Limpa</title>
+    <title>🌊 EcoGaropaba - Missão Praia Limpa</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="jogo-container">
-        <header class="jogo-header">
-            <h1>🌊 EcoGaropaba</h1>
-            <p>Verão em Garopaba! Clique no lixo espalhado e depois na lixeira correta.</p>
-            
-            <div class="painel-status">
-                <div class="pontos-box">Pontos: <span id="contador-pontos">0</span></div>
-                <div class="mensagem-box" id="mensagem-alerta">Ajude a limpar a praia de Garopaba!</div>
+<div class="jogo-container">
+    
+    <!-- CABEÇALHO -->
+    <header class="jogo-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <span class="logo-icon">🌊</span>
+                <h1>EcoGaropaba</h1>
             </div>
-        </header>
+            <div class="header-stats">
+                <span class="subtitle">🌿 Proteja a vida marinha!</span>
+                <span class="meta-lixos" id="meta-lixos">🎯 0/15</span>
+            </div>
+        </div>
+        
+        <div class="painel-status">
+            <div class="pontos-box">
+                <span>⭐</span>
+                <span id="contador-pontos">0</span>
+            </div>
+            <div class="barra-progresso-container">
+                <div class="barra-progresso" id="barra-progresso" style="width: 0%"></div>
+            </div>
+            <div class="mensagem-box" id="mensagem-alerta">
+                🎯 Clique em "Iniciar" para começar
+            </div>
+        </div>
+    </header>
 
-        <main class="cenario-praia" id="praia">
-            
-            <div class="decoracao surfista">🏄‍♂️</div>
-            <div class="decoracao guardasol-1">⛱️</div>
-            <div class="decoracao guardasol-2">⛱️</div>
-            <div class="decoracao banhista">🧘‍♀️</div>
-            <div class="decoracao nadador">🏊‍♂️</div>
+    <!-- CENÁRIO DA PRAIA -->
+    <main class="cenario-praia" id="praia">
+        <!-- Céu -->
+        <div class="ceu"></div>
+        
+        <!-- Sol -->
+        <div class="sol">☀️</div>
+        
+        <!-- Nuvens -->
+        <div class="nuvem nuvem1">☁️</div>
+        <div class="nuvem nuvem2">☁️</div>
+        <div class="nuvem nuvem3">☁️</div>
+        
+        <!-- Pássaros -->
+        <div class="passaro passaro1">🕊️</div>
+        <div class="passaro passaro2">🕊️</div>
+        
+        <!-- Mar -->
+        <div class="mar"></div>
+        <div class="onda onda1">🌊</div>
+        <div class="onda onda2">🌊</div>
+        <div class="onda onda3">🌊</div>
+        <div class="espuma"></div>
+        
+        <!-- Areia -->
+        <div class="areia"></div>
+        
+        <!-- Vegetação -->
+        <div class="coqueiro coqueiro1">🌴</div>
+        <div class="coqueiro coqueiro2">🌴</div>
+        <div class="planta planta1">🌿</div>
+        <div class="planta planta2">🌿</div>
+        
+        <!-- Estruturas -->
+        <div class="guarda-sol guarda-sol1">⛱️</div>
+        <div class="guarda-sol guarda-sol2">⛱️</div>
+        <div class="barraca">🏕️</div>
+        
+        <!-- Pessoas -->
+        <div class="pessoa pessoa1">🏄‍♂️</div>
+        <div class="pessoa pessoa2">🧘‍♀️</div>
+        <div class="pessoa pessoa3">🏊‍♂️</div>
+        <div class="pessoa pessoa4">👨‍👩‍👦</div>
+        
+        <!-- Caminho de madeira -->
+        <div class="caminho"></div>
+        
+        <!-- Placa informativa -->
+        <div class="placa-aviso">
+            <span>🌊 Área de Preservação</span>
+            <span>🏖️ Mantenha a praia limpa!</span>
+        </div>
 
-            <div class="instrucao-inicial">Recolha o lixo deixado pelos turistas!</div>
-        </main>
+        <!-- TELA DE INÍCIO -->
+        <div class="tela-inicio" id="tela-inicio">
+            <div class="inicio-content">
+                <span class="inicio-icon">🌊</span>
+                <h2>EcoGaropaba</h2>
+                <p>Ajude a manter a praia limpa!</p>
+                <p class="inicio-descricao">
+                    🎯 Recolha os <strong>15 resíduos</strong> espalhados pela praia<br>
+                    ♻️ Descarte cada um na <strong>lixeira correta</strong><br>
+                    ⭐ Ganhe <strong>10 pontos</strong> por acerto
+                </p>
+                <button class="btn-iniciar" id="btn-iniciar">🚀 Iniciar Jogo</button>
+            </div>
+        </div>
+        
+        <!-- TELA DE VITÓRIA -->
+        <div class="tela-vitoria" id="tela-vitoria" style="display: none;">
+            <div class="vitoria-content">
+                <span class="vitoria-icon">🏆</span>
+                <h2>Praia Limpa!</h2>
+                <p>Parabéns! Você recolheu todos os <strong>15 resíduos</strong>!</p>
+                <p class="vitoria-pontos">⭐ Pontuação final: <span id="pontos-finais">0</span></p>
+                <p class="vitoria-mensagem">🌊 Garopaba agradece sua contribuição!</p>
+                <button class="btn-reiniciar" onclick="location.reload()">🔄 Jogar Novamente</button>
+            </div>
+        </div>
+    </main>
 
-        <footer class="zona-lixeiras">
-            
-            <button class="lixeira lixeira-organico" data-tipo="organico">
-                <span class="lixeira-icone">🍏</span>
-                <span class="lixeira-nome">Orgânico</span>
-            </button>
+    <!-- LIXEIRAS -->
+    <footer class="zona-lixeiras">
+        <button class="lixeira lixeira-organico" data-tipo="organico">
+            <span class="lixeira-icone">🌱</span>
+            <span class="lixeira-nome">Orgânico</span>
+            <span class="lixeira-exemplo">Restos de comida</span>
+        </button>
+        
+        <button class="lixeira lixeira-reciclavel" data-tipo="reciclavel">
+            <span class="lixeira-icone">♻️</span>
+            <span class="lixeira-nome">Reciclável</span>
+            <span class="lixeira-exemplo">Plástico, vidro, metal</span>
+        </button>
+        
+        <button class="lixeira lixeira-eletronico" data-tipo="eletronico">
+            <span class="lixeira-icone">🔋</span>
+            <span class="lixeira-nome">Eletrônico</span>
+            <span class="lixeira-exemplo">Pilhas, baterias</span>
+        </button>
+        
+        <button class="lixeira lixeira-rejeito" data-tipo="rejeito">
+            <span class="lixeira-icone">🚮</span>
+            <span class="lixeira-nome">Rejeito</span>
+            <span class="lixeira-exemplo">Bitucas, fraldas</span>
+        </button>
+    </footer>
+</div>
 
-            <button class="lixeira lixeira-reciclavel" data-tipo="reciclavel">
-                <span class="lixeira-icone">🍾</span>
-                <span class="lixeira-nome">Reciclável</span>
-            </button>
-
-            <button class="lixeira lixeira-rejeito" data-tipo="rejeito">
-                <span class="lixeira-icone">🚬</span>
-                <span class="lixeira-nome">Rejeito</span>
-            </button>
-
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
