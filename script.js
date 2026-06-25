@@ -1,121 +1,165 @@
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("EcoGaropaba - Banco de Resíduos Expandido! 🌊🐾");
+    console.log("🌊 EcoGaropaba - Missão Praia Limpa ativada!");
 
-    // 1. BANCO DE DADOS DOS RESÍDUOS (EXPANDIDO PARA 15 ITENS!)
+    // ===== BANCO DE RESÍDUOS COMPLETO (20 ITENS) =====
     const listaResiduos = [
-        // --- ORGÂNICOS ---
-        { emoji: "🍏", nome: "Resto de Maçã", tipo: "organico", dica: "Restos de frutas são orgânicos e se decompõem rápido, mas se jogados na areia atraem insetos e poluem a praia." },
-        { emoji: "🍌", nome: "Casca de Banana", tipo: "organico", dica: "Matéria orgânica deve ir para a compostagem ou lixeira de orgânicos, nunca deixada na praia!" },
-        { emoji: "🍕", nome: "Pedaço de Pizza", tipo: "organico", dica: "Restos de alimentos na praia alimentam espécies invasoras e alteram o ecossistema local." },
-        { emoji: "🍤", nome: "Casca de Camarão", tipo: "organico", dica: "Restos de frutos do mar são orgânicos. Enterrar na areia causa mau cheiro e atrai urubus." },
-        { emoji: "🧉", nome: "Erva-Mate do Chima", tipo: "organico", dica: "A erva do chimarrão é matéria orgânica vegetal! Pode ir para a lixeira orgânica ou composteira." },
+        // Orgânicos
+        { emoji: "🍌", nome: "Casca de Banana", tipo: "organico", dica: "Restos de alimentos atraem insetos e ratos." },
+        { emoji: "🥑", nome: "Caroço de Abacate", tipo: "organico", dica: "Demora meses para decompor e atrai animais selvagens." },
+        { emoji: "🧉", nome: "Erva-Mate", tipo: "organico", dica: "A erva do chimarrão é orgânica, mas se acumular na areia mofa." },
+        { emoji: "🍕", nome: "Pedaço de Pizza", tipo: "organico", dica: "Restos de comida poluem a areia e prejudicam a fauna local." },
+        { emoji: "🍎", nome: "Resto de Maçã", tipo: "organico", dica: "Frutas se decompõem rápido, mas atraem vespas na praia." },
+        
+        // Recicláveis
+        { emoji: "🍼", nome: "Garrafa Plástica", tipo: "reciclavel", dica: "O plástico pode fragmentar em microplástico e matar animais marinhos!" },
+        { emoji: "🥫", nome: "Lata de Alumínio", tipo: "reciclavel", dica: "O alumínio é 100% reciclável, não o deixe na areia." },
+        { emoji: "📦", nome: "Caixa de Papelão", tipo: "reciclavel", dica: "O papelão molha e desmancha, mas deve ser reciclado seco." },
+        { emoji: "🍾", nome: "Garrafa de Vidro", tipo: "reciclavel", dica: "Vidro quebrado na areia pode cortar banhistas e animais." },
+        { emoji: "🛍️", nome: "Sacola Plástica", tipo: "reciclavel", dica: "Tartarugas confundem sacolas plásticas com águas-vivas." },
 
-        // --- RECICLÁVEIS ---
-        { emoji: "🍾", nome: "Garrafa de Vidro", tipo: "reciclavel", dica: "O vidro é 100% reciclável, mas na praia pode quebrar e machucar gravemente banhistas e surfistas." },
-        { emoji: "🥤", nome: "Copo Plástico", tipo: "reciclavel", dica: "Plásticos levam mais de 450 anos para se decompor e viram microplásticos que matam a fauna marinha." },
-        { emoji: "🥫", nome: "Lata de Alumínio", tipo: "reciclavel", dica: "Latas de bebidas são altamente recicláveis! Destine corretamente para apoiar a reciclagem local." },
-        { emoji: "🥤", nome: "Canudo Plástico", tipo: "reciclavel", dica: "Canudinhos plásticos são leves e voam fácil para o mar, ameaçando tartarugas marinhas." },
-        { emoji: "⚙️", nome: "Tampinha de Garrafa", tipo: "reciclavel", dica: "Tampinhas de plástico ou metal são recicláveis. Animais marinhos e aves frequentemente as engolem por engano." },
+        // Eletrônicos
+        { emoji: "🔋", nome: "Pilha Velha", tipo: "eletronico", dica: "Pilhas vazam metais pesados altamente tóxicos para o solo e água." },
+        { emoji: "📱", nome: "Bateria de Celular", tipo: "eletronico", dica: "Baterias contêm componentes químicos perigosos." },
+        { emoji: "🔌", nome: "Cabo USB Quebrado", tipo: "eletronico", dica: "Cabos e fios possuem cobre e plástico que devem ser processados separadamente." },
+        { emoji: "🖲️", nome: "Mouse Velho", tipo: "eletronico", dica: "Placas de circuito eletrônico necessitam de descarte especial." },
+        { emoji: "🔦", nome: "Lanterna Estragada", tipo: "eletronico", dica: "Dispositivos eletrônicos não devem ir para o lixo comum." },
 
-        // --- REJEITOS ---
-        { emoji: "🚬", nome: "Bituca de Cigarro", tipo: "rejeito", dica: "Bitucas contêm plástico no filtro e substâncias tóxicas. Uma única bituca polui até 50 litros de água!" },
-        { emoji: "🧻", nome: "Lenço Descartável", tipo: "rejeito", dica: "Papéis higiênicos, lenços umedecidos e fraldas usadas não podem ser reciclados. São Rejeito." },
-        { emoji: "😷", nome: "Máscara/Curativo", tipo: "rejeito", dica: "Materiais de higiene pessoal ou resíduos contaminados vão direto para a lixeira de rejeitos." },
-        { emoji: "🍦", nome: "Embalagem de Sorvete", tipo: "rejeito", dica: "Embalagens plásticas metalizadas (como as de picolé ou salgadinho) são difíceis de reciclar e vão para o Rejeito." },
-        { emoji: "🪵", nome: "Palito de Picolé", tipo: "rejeito", dica: "Embora seja madeira, palitos sujos de sorvete industrializado geralmente vão para o rejeito na coleta comum da praia." }
+        // Rejeito
+        { emoji: "🚬", nome: "Bituca de Cigarro", tipo: "rejeito", dica: "Uma única bituca polui até 50 litros de água com toxinas!" },
+        { emoji: "🧻", nome: "Papel Higiênico", tipo: "rejeito", dica: "Papéis de higiene usados não são recicláveis devido à contaminação." },
+        { emoji: "🩲", nome: "Fralda Descartável", tipo: "rejeito", dica: "Fraldas levam cerca de 500 anos para se decompor no ecossistema." },
+        { emoji: "🍬", nome: "Chiclete Mastigado", tipo: "rejeito", dica: "Pássaros tentam comer chicletes grudados na areia e podem morrer sufocados." },
+        { emoji: "🩹", nome: "Curativo Usado", tipo: "rejeito", dica: "Materiais de primeiros socorros usados são considerados rejeitos não recicláveis." }
     ];
 
-    // 2. VARIÁVEIS DE CONTROLE DO JOGO
+    // ===== VARIÁVEIS DO JOGO =====
     let pontos = 0;
-    let lixoSelecionado = null;
+    let lixosRecolhidos = 0;
+    const metaLixos = 15;
+    let itemSelecionado = null;
 
-    // Elementos do DOM
+    // ===== ELEMENTOS DO DOM =====
+    const telaInicio = document.getElementById("tela-inicio");
+    const telaVitoria = document.getElementById("tela-vitoria");
+    const btnIniciar = document.getElementById("btn-iniciar");
     const praia = document.getElementById("praia");
     const contadorPontos = document.getElementById("contador-pontos");
+    const pontosFinais = document.getElementById("pontos-finais");
+    const barraProgresso = document.getElementById("barra-progresso");
     const mensagemAlerta = document.getElementById("mensagem-alerta");
+    const indicadorMeta = document.getElementById("meta-lixos");
     const lixeiras = document.querySelectorAll(".lixeira");
 
-    // 3. FUNÇÃO PARA GERAR UM LIXO ALEATÓRIO NA TELA
-    function gerarLixoNaPraia() {
-        const instrucao = document.querySelector(".instrucao-inicial");
-        if (instrucao) instrucao.remove();
+    // ===== INICIAR JOGO =====
+    btnIniciar.addEventListener("click", function() {
+        telaInicio.classList.add("escondida");
+        mensagemAlerta.textContent = "🔍 Clique em um resíduo na praia para recolhê-lo!";
+        inicializarPraia();
+    });
 
-        // Escolhe um item aleatório da nossa nova lista de 15 itens
-        const residuoAleatorio = listaResiduos[Math.floor(Math.random() * listaResiduos.length)];
+    // ===== FUNÇÃO PARA GERAR OS LIXOS NA AREIA =====
+    function inicializarPraia() {
+        // Embaralha o banco de dados e pega exatamente 15 itens aleatórios
+        const lixosSorteados = [...listaResiduos].sort(() => 0.5 - Math.random()).slice(0, metaLixos);
 
-        // Cria o elemento HTML do lixo
-        const lixoElemento = document.createElement("div");
-        lixoElemento.classList.add("lixo-item");
-        lixoElemento.innerHTML = residuoAleatorio.emoji;
-        lixoElemento.setAttribute("data-tipo", residuoAleatorio.tipo);
-        lixoElemento.setAttribute("data-nome", residuoAleatorio.nome);
-        lixoElemento.setAttribute("data-dica", residuoAleatorio.dica);
-
-        // Define uma posição aleatória restringindo para a área da areia
-        const xAleatorio = Math.floor(Math.random() * (praia.clientWidth - 60)) + 20;
-        const yAleatorio = Math.floor(Math.random() * 160) + 180; 
-
-        lixoElemento.style.left = `${xAleatorio}px`;
-        lixoElemento.style.top = `${yAleatorio}px`;
-
-        // Evento de clique para SELECIONAR o lixo
-        lixoElemento.addEventListener("click", function(e) {
-            e.stopPropagation(); 
+        lixosSorteados.forEach((lixo, index) => {
+            const elementoLixo = document.createElement("div");
+            elementoLixo.classList.add("lixo-item");
+            elementoLixo.textContent = lixo.emoji;
+            elementoLixo.title = lixo.nome;
             
-            if (lixoSelecionado) {
-                lixoSelecionado.classList.remove("selecionado");
-            }
+            // Armazena os dados do tipo e nome diretamente no elemento HTML
+            elementoLixo.dataset.tipo = lixo.tipo;
+            elementoLixo.dataset.nome = lixo.nome;
+            elementoLixo.dataset.dica = lixo.dica;
 
-            lixoSelecionado = lixoElemento;
-            lixoSelecionado.classList.add("selecionado");
-            
-            mensagemAlerta.innerText = `Selecionado: ${residuoAleatorio.nome}. Clique na lixeira correspondente!`;
-            mensagemAlerta.style.color = "#fbd46d";
+            // Define posições aleatórias dentro da área da AREIA do cenário
+            // A areia ocupa os 30% inferiores da tela (bottom: 0 a 30%)
+            const xAleatorio = Math.random() * 85 + 5; // Evita encostar totalmente nas bordas laterais (5% a 90%)
+            const yAleatorio = Math.random() * 18 + 2;  // Fica dentro da faixa de areia inferior (2% a 20%)
+
+            elementoLixo.style.left = `${xAleatorio}%`;
+            elementoLixo.style.bottom = `${yAleatorio}%`;
+
+            // Adiciona evento de clique para selecionar o lixo
+            elementoLixo.addEventListener("click", function(e) {
+                e.stopPropagation(); // Evita bugs de clique duplo
+                selecionarLixo(elementoLixo);
+            });
+
+            praia.appendChild(elementoLixo);
         });
-
-        praia.appendChild(lixoElemento);
     }
 
-    // 4. LÓGICA DO CLIQUE NAS LIXEIRAS (DESCARTE)
+    // ===== SELECIONAR UM LIXO =====
+    function selecionarLixo(elemento) {
+        // Se já tinha outro selecionado, remove o efeito visual dele
+        if (itemSelecionado) {
+            itemSelecionado.classList.remove("selecionado");
+        }
+
+        itemSelecionado = elemento;
+        itemSelecionado.classList.add("selecionado");
+        
+        mensagemAlerta.textContent = `Você pegou: ${itemSelecionado.dataset.nome}. Agora clique na lixeira correta abaixo!`;
+        mensagemAlerta.style.color = "#fbd46d";
+    }
+
+    // ===== LOGICA DAS LIXEIRAS =====
     lixeiras.forEach(lixeira => {
         lixeira.addEventListener("click", function() {
-            if (!lixoSelecionado) {
-                mensagemAlerta.innerText = "❌ Escolha um lixo na praia primeiro!";
+            // Se o jogador clicar na lixeira sem ter pego nenhum lixo antes
+            if (!itemSelecionado) {
+                mensagemAlerta.textContent = "❌ Primeiro clique em um resíduo na praia!";
                 mensagemAlerta.style.color = "#ff7675";
                 return;
             }
 
-            const tipoLixeira = lixeira.getAttribute("data-tipo");
-            const tipoLixo = lixoSelecionado.getAttribute("data-tipo");
-            const nomeLixo = lixoSelecionado.getAttribute("data-nome");
-            const dicaLixo = lixoSelecionado.getAttribute("data-dica");
+            const tipoLixeira = this.dataset.tipo;
+            const tipoLixo = itemSelecionado.dataset.tipo;
 
-            // SE ACERTOU O DESCARTE:
+            // Se o descarte estiver CORRETO
             if (tipoLixeira === tipoLixo) {
                 pontos += 10;
-                contadorPontos.innerText = pontos;
-                mensagemAlerta.innerText = `✅ Boa! O ${nomeLixo} foi para o lugar certo! (+10 pontos)`;
-                mensagemAlerta.style.color = "#55efc4";
+                lixosRecolhidos++;
+
+                // Atualiza dados na tela
+                contadorPontos.textContent = pontos;
+                indicadorMeta.textContent = `🎯 ${lixosRecolhidos}/${metaLixos}`;
                 
-                lixoSelecionado.remove();
-                lixoSelecionado = null;
+                // Atualiza a barra de progresso
+                const porcentagem = (lixosRecolhidos / metaLixos) * 100;
+                barraProgresso.style.width = `${porcentagem}%`;
 
-                // Repõe com um novo lixo
-                setTimeout(gerarLixoNaPraia, 800);
+                mensagemAlerta.textContent = `✅ Boa! Descartou ${itemSelecionado.dataset.nome} corretamente! (+10 pontos)`;
+                mensagemAlerta.style.color = "#2ecc71";
 
-            // SE ERROU O DESCARTE:
+                // Remove o lixo do cenário
+                itemSelecionado.remove();
+                itemSelecionado = null;
+
+                // Verifica se ganhou o jogo
+                if (lixosRecolhidos === metaLixos) {
+                    finalizarJogo();
+                }
+
             } else {
-                mensagemAlerta.innerText = `❌ Incorreto! Dica: ${dicaLixo}`;
+                // Se o descarte estiver INCORRETO
+                mensagemAlerta.textContent = `❌ Ops! Lixeira errada para ${itemSelecionado.dataset.nome}. Dica: ${itemSelecionado.dataset.dica}`;
                 mensagemAlerta.style.color = "#ff7675";
                 
-                lixoSelecionado.classList.remove("selecionado");
-                lixoSelecionado = null;
+                // Remove a seleção atual para o jogador tentar de novo
+                itemSelecionado.classList.remove("selecionado");
+                itemSelecionado = null;
             }
         });
     });
 
-    // Inicializa o jogo gerando 9 lixos aleatórios na praia
-    for (let i = 0; i < 9; i++) {
-        setTimeout(gerarLixoNaPraia, i * 150);
+    // ===== FIM DE JOGO (VITÓRIA) =====
+    function finalizarJogo() {
+        pontosFinais.textContent = pontos;
+        telaVitoria.classList.add("mostrar");
+        mensagemAlerta.textContent = "🏆 Parabéns! A praia de Garopaba está limpa!";
+        mensagemAlerta.style.color = "#f1c40f";
     }
 });
