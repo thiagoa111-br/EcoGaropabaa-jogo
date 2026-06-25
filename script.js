@@ -1,165 +1,512 @@
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("🌊 EcoGaropaba - Missão Praia Limpa ativada!");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Remove o quadrado cinza ao tocar no mobile */
+}
 
-    // ===== BANCO DE RESÍDUOS COMPLETO (20 ITENS) =====
-    const listaResiduos = [
-        // Orgânicos
-        { emoji: "🍌", nome: "Casca de Banana", tipo: "organico", dica: "Restos de alimentos atraem insetos e ratos." },
-        { emoji: "🥑", nome: "Caroço de Abacate", tipo: "organico", dica: "Demora meses para decompor e atrai animais selvagens." },
-        { emoji: "🧉", nome: "Erva-Mate", tipo: "organico", dica: "A erva do chimarrão é orgânica, mas se acumular na areia mofa." },
-        { emoji: "🍕", nome: "Pedaço de Pizza", tipo: "organico", dica: "Restos de comida poluem a areia e prejudicam a fauna local." },
-        { emoji: "🍎", nome: "Resto de Maçã", tipo: "organico", dica: "Frutas se decompõem rápido, mas atraem vespas na praia." },
-        
-        // Recicláveis
-        { emoji: "🍼", nome: "Garrafa Plástica", tipo: "reciclavel", dica: "O plástico pode fragmentar em microplástico e matar animais marinhos!" },
-        { emoji: "🥫", nome: "Lata de Alumínio", tipo: "reciclavel", dica: "O alumínio é 100% reciclável, não o deixe na areia." },
-        { emoji: "📦", nome: "Caixa de Papelão", tipo: "reciclavel", dica: "O papelão molha e desmancha, mas deve ser reciclado seco." },
-        { emoji: "🍾", nome: "Garrafa de Vidro", tipo: "reciclavel", dica: "Vidro quebrado na areia pode cortar banhistas e animais." },
-        { emoji: "🛍️", nome: "Sacola Plástica", tipo: "reciclavel", dica: "Tartarugas confundem sacolas plásticas com águas-vivas." },
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(145deg, #0a0e1a, #1a2a4a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px;
+}
 
-        // Eletrônicos
-        { emoji: "🔋", nome: "Pilha Velha", tipo: "eletronico", dica: "Pilhas vazam metais pesados altamente tóxicos para o solo e água." },
-        { emoji: "📱", nome: "Bateria de Celular", tipo: "eletronico", dica: "Baterias contêm componentes químicos perigosos." },
-        { emoji: "🔌", nome: "Cabo USB Quebrado", tipo: "eletronico", dica: "Cabos e fios possuem cobre e plástico que devem ser processados separadamente." },
-        { emoji: "🖲️", nome: "Mouse Velho", tipo: "eletronico", dica: "Placas de circuito eletrônico necessitam de descarte especial." },
-        { emoji: "🔦", nome: "Lanterna Estragada", tipo: "eletronico", dica: "Dispositivos eletrônicos não devem ir para o lixo comum." },
+.jogo-container {
+    width: 100%;
+    max-width: 880px;
+    background: #ffffff;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+}
 
-        // Rejeito
-        { emoji: "🚬", nome: "Bituca de Cigarro", tipo: "rejeito", dica: "Uma única bituca polui até 50 litros de água com toxinas!" },
-        { emoji: "🧻", nome: "Papel Higiênico", tipo: "rejeito", dica: "Papéis de higiene usados não são recicláveis devido à contaminação." },
-        { emoji: "🩲", nome: "Fralda Descartável", tipo: "rejeito", dica: "Fraldas levam cerca de 500 anos para se decompor no ecossistema." },
-        { emoji: "🍬", nome: "Chiclete Mastigado", tipo: "rejeito", dica: "Pássaros tentam comer chicletes grudados na areia e podem morrer sufocados." },
-        { emoji: "🩹", nome: "Curativo Usado", tipo: "rejeito", dica: "Materiais de primeiros socorros usados são considerados rejeitos não recicláveis." }
-    ];
+/* ===== HEADER ===== */
+.jogo-header {
+    background: linear-gradient(135deg, #0a3d62, #1e56a0);
+    padding: 14px 22px;
+    color: white;
+    border-bottom: 3px solid #f39c12;
+}
 
-    // ===== VARIÁVEIS DO JOGO =====
-    let pontos = 0;
-    let lixosRecolhidos = 0;
-    const metaLixos = 15;
-    let itemSelecionado = null;
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
-    // ===== ELEMENTOS DO DOM =====
-    const telaInicio = document.getElementById("tela-inicio");
-    const telaVitoria = document.getElementById("tela-vitoria");
-    const btnIniciar = document.getElementById("btn-iniciar");
-    const praia = document.getElementById("praia");
-    const contadorPontos = document.getElementById("contador-pontos");
-    const pontosFinais = document.getElementById("pontos-finais");
-    const barraProgresso = document.getElementById("barra-progresso");
-    const mensagemAlerta = document.getElementById("mensagem-alerta");
-    const indicadorMeta = document.getElementById("meta-lixos");
-    const lixeiras = document.querySelectorAll(".lixeira");
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    // ===== INICIAR JOGO =====
-    btnIniciar.addEventListener("click", function() {
-        telaInicio.classList.add("escondida");
-        mensagemAlerta.textContent = "🔍 Clique em um resíduo na praia para recolhê-lo!";
-        inicializarPraia();
-    });
+.logo-icon {
+    font-size: 1.8rem;
+}
 
-    // ===== FUNÇÃO PARA GERAR OS LIXOS NA AREIA =====
-    function inicializarPraia() {
-        // Embaralha o banco de dados e pega exatamente 15 itens aleatórios
-        const lixosSorteados = [...listaResiduos].sort(() => 0.5 - Math.random()).slice(0, metaLixos);
+.jogo-header h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #fff, #fbd46d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-        lixosSorteados.forEach((lixo, index) => {
-            const elementoLixo = document.createElement("div");
-            elementoLixo.classList.add("lixo-item");
-            elementoLixo.textContent = lixo.emoji;
-            elementoLixo.title = lixo.nome;
-            
-            // Armazena os dados do tipo e nome diretamente no elemento HTML
-            elementoLixo.dataset.tipo = lixo.tipo;
-            elementoLixo.dataset.nome = lixo.nome;
-            elementoLixo.dataset.dica = lixo.dica;
+.header-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-            // Define posições aleatórias dentro da área da AREIA do cenário
-            // A areia ocupa os 30% inferiores da tela (bottom: 0 a 30%)
-            const xAleatorio = Math.random() * 85 + 5; // Evita encostar totalmente nas bordas laterais (5% a 90%)
-            const yAleatorio = Math.random() * 18 + 2;  // Fica dentro da faixa de areia inferior (2% a 20%)
+.subtitle {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    background: rgba(255,255,255,0.1);
+    padding: 3px 12px;
+    border-radius: 30px;
+}
 
-            elementoLixo.style.left = `${xAleatorio}%`;
-            elementoLixo.style.bottom = `${yAleatorio}%`;
+.meta-lixos {
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.15);
+    padding: 3px 14px;
+    border-radius: 30px;
+    color: #fbd46d;
+}
 
-            // Adiciona evento de clique para selecionar o lixo
-            elementoLixo.addEventListener("click", function(e) {
-                e.stopPropagation(); // Evita bugs de clique duplo
-                selecionarLixo(elementoLixo);
-            });
+.painel-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 40px;
+    margin-top: 10px;
+    border: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
+}
 
-            praia.appendChild(elementoLixo);
-        });
-    }
+.pontos-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #f07b3f, #e67e22);
+    padding: 3px 16px;
+    border-radius: 40px;
+    box-shadow: 0 4px 15px rgba(240, 123, 63, 0.3);
+    white-space: nowrap;
+}
 
-    // ===== SELECIONAR UM LIXO =====
-    function selecionarLixo(elemento) {
-        // Se já tinha outro selecionado, remove o efeito visual dele
-        if (itemSelecionado) {
-            itemSelecionado.classList.remove("selecionado");
-        }
+.barra-progresso-container {
+    flex: 1;
+    min-width: 100px;
+    height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
 
-        itemSelecionado = elemento;
-        itemSelecionado.classList.add("selecionado");
-        
-        mensagemAlerta.textContent = `Você pegou: ${itemSelecionado.dataset.nome}. Agora clique na lixeira correta abaixo!`;
-        mensagemAlerta.style.color = "#fbd46d";
-    }
+.barra-progresso {
+    height: 100%;
+    background: linear-gradient(90deg, #f1c40f, #2ecc71);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+    width: 0%;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+}
 
-    // ===== LOGICA DAS LIXEIRAS =====
-    lixeiras.forEach(lixeira => {
-        lixeira.addEventListener("click", function() {
-            // Se o jogador clicar na lixeira sem ter pego nenhum lixo antes
-            if (!itemSelecionado) {
-                mensagemAlerta.textContent = "❌ Primeiro clique em um resíduo na praia!";
-                mensagemAlerta.style.color = "#ff7675";
-                return;
-            }
+.mensagem-box {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fbd46d;
+    text-align: right;
+    max-width: 55%;
+    transition: 0.3s;
+    padding: 2px 10px;
+}
 
-            const tipoLixeira = this.dataset.tipo;
-            const tipoLixo = itemSelecionado.dataset.tipo;
+/* ===== CENÁRIO ===== */
+.cenario-praia {
+    height: 460px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid #8a6b3a;
+}
 
-            // Se o descarte estiver CORRETO
-            if (tipoLixeira === tipoLixo) {
-                pontos += 10;
-                lixosRecolhidos++;
+.ceu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(to bottom, #1a3a6a 0%, #4a90d9 30%, #6bb3f0 55%, #87ceeb 70%);
+    z-index: 0;
+}
 
-                // Atualiza dados na tela
-                contadorPontos.textContent = pontos;
-                indicadorMeta.textContent = `🎯 ${lixosRecolhidos}/${metaLixos}`;
-                
-                // Atualiza a barra de progresso
-                const porcentagem = (lixosRecolhidos / metaLixos) * 100;
-                barraProgresso.style.width = `${porcentagem}%`;
+.sol {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 3.5rem;
+    z-index: 2;
+    animation: pulseSol 3s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 30px #f9d71c);
+}
 
-                mensagemAlerta.textContent = `✅ Boa! Descartou ${itemSelecionado.dataset.nome} corretamente! (+10 pontos)`;
-                mensagemAlerta.style.color = "#2ecc71";
+@keyframes pulseSol {
+    0% { transform: scale(1); filter: drop-shadow(0 0 20px #f9d71c); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 50px #f9d71c); }
+}
 
-                // Remove o lixo do cenário
-                itemSelecionado.remove();
-                itemSelecionado = null;
+.nuvem {
+    position: absolute;
+    font-size: 2.8rem;
+    opacity: 0.5;
+    z-index: 2;
+    animation: moverNuvem 30s linear infinite;
+}
 
-                // Verifica se ganhou o jogo
-                if (lixosRecolhidos === metaLixos) {
-                    finalizarJogo();
-                }
+.nuvem1 { top: 8px; left: -80px; animation-duration: 32s; }
+.nuvem2 { top: 35px; left: -180px; animation-duration: 38s; animation-delay: 6s; font-size: 2.2rem; }
+.nuvem3 { top: 20px; left: -280px; animation-duration: 26s; animation-delay: 12s; font-size: 2.5rem; }
 
-            } else {
-                // Se o descarte estiver INCORRETO
-                mensagemAlerta.textContent = `❌ Ops! Lixeira errada para ${itemSelecionado.dataset.nome}. Dica: ${itemSelecionado.dataset.dica}`;
-                mensagemAlerta.style.color = "#ff7675";
-                
-                // Remove a seleção atual para o jogador tentar de novo
-                itemSelecionado.classList.remove("selecionado");
-                itemSelecionado = null;
-            }
-        });
-    });
+@keyframes moverNuvem {
+    0% { transform: translateX(0); opacity: 0.4; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateX(1050px); opacity: 0.3; }
+}
 
-    // ===== FIM DE JOGO (VITÓRIA) =====
-    function finalizarJogo() {
-        pontosFinais.textContent = pontos;
-        telaVitoria.classList.add("mostrar");
-        mensagemAlerta.textContent = "🏆 Parabéns! A praia de Garopaba está limpa!";
-        mensagemAlerta.style.color = "#f1c40f";
-    }
-});
+.passaro {
+    position: absolute;
+    font-size: 1.6rem;
+    z-index: 3;
+    animation: voar 8s ease-in-out infinite;
+}
+
+.passaro1 { top: 25px; left: 15%; animation-delay: 0s; }
+.passaro2 { top: 50px; left: 45%; animation-delay: 3s; font-size: 1.3rem; }
+
+@keyframes voar {
+    0% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50px, -20px) scale(1.1); }
+    50% { transform: translate(100px, 0) scale(1); }
+    75% { transform: translate(50px, 20px) scale(1.1); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+.mar {
+    position: absolute;
+    bottom: 30%;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(to bottom, rgba(30, 144, 200, 0.6) 0%, rgba(20, 100, 160, 0.8) 50%, rgba(10, 70, 120, 0.9) 100%);
+    z-index: 1;
+}
+
+.onda {
+    position: absolute;
+    font-size: 2.2rem;
+    z-index: 2;
+    opacity: 0.3;
+    animation: ondaMov 4s ease-in-out infinite alternate;
+}
+
+.onda1 { bottom: 32%; left: -20px; animation-delay: 0s; }
+.onda2 { bottom: 28%; left: 30%; animation-delay: 1.2s; font-size: 1.8rem; }
+.onda3 { bottom: 26%; right: 10%; animation-delay: 2.5s; font-size: 2rem; }
+
+@keyframes ondaMov {
+    0% { transform: translateX(0) scale(1); }
+    100% { transform: translateX(40px) scale(1.08); }
+}
+
+.espuma {
+    position: absolute;
+    bottom: 29%;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.3) 20%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.3) 80%, transparent 100%);
+    z-index: 3;
+    animation: espumaMov 3s ease-in-out infinite alternate;
+}
+
+@keyframes espumaMov {
+    0% { opacity: 0.3; transform: scaleX(1); }
+    100% { opacity: 0.7; transform: scaleX(1.05); }
+}
+
+.areia {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to bottom, #deb887 0%, #d4a574 20%, #c9a06e 45%, #b8954e 70%, #a0803a 100%);
+    z-index: 1;
+    border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+}
+
+.coqueiro {
+    position: absolute;
+    font-size: 4.5rem;
+    z-index: 4;
+    filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.2));
+}
+
+.coqueiro1 { bottom: 18%; left: 2%; }
+.coqueiro2 { bottom: 20%; right: 2%; }
+
+.planta {
+    position: absolute;
+    font-size: 2rem;
+    z-index: 4;
+    opacity: 0.7;
+}
+
+.planta1 { bottom: 22%; left: 12%; }
+.planta2 { bottom: 25%; right: 12%; }
+
+.guarda-sol {
+    position: absolute;
+    font-size: 3.8rem;
+    z-index: 4;
+    filter: drop-shadow(2px 4px 12px rgba(0,0,0,0.15));
+}
+
+.guarda-sol1 { bottom: 32%; left: 18%; }
+.guarda-sol2 { bottom: 35%; right: 20%; }
+
+.barraca {
+    position: absolute;
+    font-size: 3.2rem;
+    z-index: 4;
+    bottom: 30%;
+    left: 42%;
+    filter: drop-shadow(2px 4px 12px rgba(0,0,0,0.15));
+}
+
+.pessoa {
+    position: absolute;
+    font-size: 2.5rem;
+    z-index: 4;
+    filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1));
+}
+
+.pessoa1 { bottom: 32%; left: 30%; }
+.pessoa2 { bottom: 30%; right: 32%; }
+.pessoa3 { bottom: 50%; right: 18%; font-size: 2rem; }
+.pessoa4 { bottom: 28%; left: 55%; font-size: 2.2rem; }
+
+.caminho {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, #8a6b3a 0px, #8a6b3a 20px, #a0803a 20px, #a0803a 25px);
+    z-index: 3;
+    opacity: 0.4;
+    border-radius: 2px;
+}
+
+.placa-aviso {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    z-index: 5;
+    border-left: 3px solid #f39c12;
+    line-height: 1.5;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* ===== TELA DE INÍCIO E VITÓRIA ===== */
+.tela-inicio, .tela-vitoria {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.8s ease;
+}
+
+.tela-inicio.escondida { display: none !important; }
+.tela-vitoria { display: none; }
+.tela-vitoria.mostrar { display: flex !important; }
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.inicio-content, .vitoria-content {
+    background: linear-gradient(145deg, #ffffff, #f0f2f5);
+    padding: 40px 30px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    animation: subirVitoria 0.6s ease;
+}
+
+@keyframes subirVitoria {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.inicio-icon, .vitoria-icon { font-size: 4rem; display: block; margin-bottom: 10px; }
+.inicio-content h2, .vitoria-content h2 { font-size: 2.2rem; color: #1a3a6a; margin-bottom: 5px; }
+.inicio-content p, .vitoria-content p { color: #34495e; font-size: 1rem; }
+.inicio-descricao { margin: 16px 0 24px !important; font-size: 0.9rem !important; line-height: 1.8; }
+.vitoria-pontos { font-size: 1.4rem !important; font-weight: 700; color: #f07b3f !important; margin: 12px 0 !important; }
+.vitoria-pontos span { font-size: 1.8rem; color: #e67e22; }
+.vitoria-mensagem { font-style: italic; color: #2c3e50 !important; margin: 10px 0 20px !important; }
+
+.btn-iniciar, .btn-reiniciar {
+    background: linear-gradient(135deg, #27ae60, #1a7a42);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 20px rgba(39, 174, 96, 0.3);
+    font-family: 'Poppins', sans-serif;
+    touch-action: manipulation;
+}
+
+.btn-reiniciar { background: linear-gradient(135deg, #1e56a0, #0a3d62); }
+
+/* ===== ITENS DE LIXO RESÍDUO ===== */
+.lixo-item {
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 2.8rem;
+    padding: 12px; /* Aumenta a caixa invisível facilitando o clique no Touch Mobile */
+    margin-left: -12px;
+    margin-bottom: -12px;
+    filter: drop-shadow(2px 4px 12px rgba(0,0,0,0.35));
+    transition: transform 0.2s ease, filter 0.2s ease;
+    animation: aparecerLixo 0.5s ease-out;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+@keyframes aparecerLixo {
+    0% { transform: scale(0) rotate(180deg); opacity: 0; }
+    60% { transform: scale(1.2) rotate(-8deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.lixo-item:hover { transform: scale(1.25); }
+.lixo-item.selecionado {
+    filter: drop-shadow(0 0 25px #f39c12) brightness(1.2);
+    animation: balanco 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes balanco {
+    0% { transform: rotate(-10deg) scale(1.1); }
+    100% { transform: rotate(10deg) scale(1.1); }
+}
+
+/* ===== ZONA LIXEIRAS ===== */
+.zona-lixeiras {
+    background: linear-gradient(to bottom, #2c3e50, #1a2632);
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    border-top: 4px solid #f39c12;
+}
+
+.lixeira {
+    border: none;
+    border-radius: 14px;
+    padding: 12px 6px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.4);
+    font-family: 'Poppins', sans-serif;
+    min-height: 90px;
+    touch-action: manipulation;
+}
+
+.lixeira:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
+
+.lixeira-organico { background: linear-gradient(145deg, #6b4c3b, #4d3428); }
+.lixeira-reciclavel { background: linear-gradient(145deg, #27ae60, #1a7a42); }
+.lixeira-eletronico { background: linear-gradient(145deg, #8e44ad, #6c3483); }
+.lixeira-rejeito { background: linear-gradient(145deg, #7f8c8d, #5d6d7e); }
+
+.lixeira-icone { font-size: 2.2rem; }
+.lixeira-nome { font-weight: 800; font-size: 0.75rem; text-transform: uppercase; }
+.lixeira-exemplo { font-size: 0.55rem; opacity: 0.7; text-align: center; }
+
+/* ===== MEDIA QUERIES (OTIMIZAÇÃO SMARTPHONES) ===== */
+@media (max-width: 768px) {
+    .jogo-container { border-radius: 16px; }
+    .jogo-header h1 { font-size: 1.2rem; }
+    .subtitle { display: none; }
+    .cenario-praia { height: 380px; }
+    .painel-status { padding: 8px 12px; gap: 8px; }
+    .mensagem-box { font-size: 0.75rem; max-width: 100%; text-align: center; width: 100%; }
+    .zona-lixeiras { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .lixeira { min-height: 80px; }
+    .lixeira-exemplo { display: none; } /* Oculta descrições longas para poupar espaço */
+    .lixo-item { font-size: 2.4rem; }
+    .coqueiro2, .pessoa2, .pessoa3, .pessoa4, .guarda-sol2, .placa-aviso { display: none; }
+}
+
+@media (max-width: 480px) {
+    body { padding: 5px; }
+    .cenario-praia { height: 330px; }
+    .lixo-item { font-size: 2.2rem; }
+    .zona-lixeiras { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 8px; }
+    .lixeira { min-height: 70px; padding: 6px 4px; }
+    .lixeira-icone { font-size: 1.6rem; }
+    .lixeira-nome { font-size: 0.65rem; }
+    .pontos-box { font-size: 0.95rem; padding: 2px 12px; }
+    .inicio-content h2, .vitoria-content h2 { font-size: 1.6rem; }
+    .btn-iniciar, .btn-reiniciar { padding: 12px 24px; font-size: 1rem; }
+    .coqueiro1 { font-size: 3.5rem; bottom: 15%; }
+    .guarda-sol1 { font-size: 3rem; bottom: 26%; }
+    .barraca { font-size: 2.6rem; left: 38%; bottom: 28%; }
+    .pessoa1 { font-size: 2rem; bottom: 28%; left: 24%; }
+}
