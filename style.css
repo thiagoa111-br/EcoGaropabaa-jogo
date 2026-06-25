@@ -373,6 +373,8 @@ body {
     border-radius: 30px;
     text-align: center;
     max-width: 90%;
+    max-height: 95%; /* Evita extrapolar a tela em celulares menores */
+    overflow-y: auto; /* Permite rolagem se necessário */
     box-shadow: 0 30px 80px rgba(0,0,0,0.5);
     animation: subirVitoria 0.6s ease;
 }
@@ -489,8 +491,16 @@ body {
     .mensagem-box { font-size: 0.75rem; max-width: 100%; text-align: center; width: 100%; }
     .zona-lixeiras { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .lixeira { min-height: 80px; }
-    .lixeira-exemplo { display: none; } /* Oculta descrições longas para poupar espaço */
+    .lixeira-exemplo { display: none; }
     .lixo-item { font-size: 2.4rem; }
+    
+    /* Ajustes na Janela de Início para Tablets/Celulares Médios */
+    .inicio-content { padding: 25px 20px; }
+    .inicio-icon { font-size: 3rem; margin-bottom: 5px; }
+    .inicio-content h2 { font-size: 1.8rem; }
+    .inicio-descricao { margin: 10px 0 15px !important; font-size: 0.85rem !important; line-height: 1.6; }
+    .btn-iniciar { padding: 10px 30px; font-size: 1.1rem; }
+
     .coqueiro2, .pessoa2, .pessoa3, .pessoa4, .guarda-sol2, .placa-aviso { display: none; }
 }
 
@@ -503,8 +513,20 @@ body {
     .lixeira-icone { font-size: 1.6rem; }
     .lixeira-nome { font-size: 0.65rem; }
     .pontos-box { font-size: 0.95rem; padding: 2px 12px; }
-    .inicio-content h2, .vitoria-content h2 { font-size: 1.6rem; }
-    .btn-iniciar, .btn-reiniciar { padding: 12px 24px; font-size: 1rem; }
+    
+    /* AJUSTE CRÍTICO: Tela de Início muito menor e compacta para Smartphones pequenos */
+    .inicio-content { padding: 15px 15px; border-radius: 20px; width: 95%; }
+    .inicio-icon { font-size: 2.2rem; margin-bottom: 2px; }
+    .inicio-content h2 { font-size: 1.4rem; }
+    .inicio-content p { font-size: 0.85rem; }
+    .inicio-descricao { margin: 6px 0 12px !important; font-size: 0.75rem !important; line-height: 1.5; }
+    
+    /* Botão menor e jogado para cima */
+    .btn-iniciar { padding: 8px 22px; font-size: 0.95rem; }
+    
+    .btn-reiniciar { padding: 10px 24px; font-size: 1rem; }
+    .vitoria-content h2 { font-size: 1.6rem; }
+
     .coqueiro1 { font-size: 3.5rem; bottom: 15%; }
     .guarda-sol1 { font-size: 3rem; bottom: 26%; }
     .barraca { font-size: 2.6rem; left: 38%; bottom: 28%; }
