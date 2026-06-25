@@ -1,186 +1,704 @@
-/* RESET E CONFIGURAÇÕES GLOBAIS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: #eef5f9;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(145deg, #0a0e1a, #1a2a4a);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 15px;
 }
 
-/* CONTAINER PRINCIPAL DO JOGO */
 .jogo-container {
     width: 100%;
-    max-width: 800px;
-    background: white;
-    border-radius: 20px;
+    max-width: 880px;
+    background: #ffffff;
+    border-radius: 28px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
 }
 
-/* CABEÇALHO DO JOGO */
+/* ===== HEADER ===== */
 .jogo-header {
-    background-color: #1e56a0;
+    background: linear-gradient(135deg, #0a3d62, #1e56a0);
+    padding: 14px 22px;
     color: white;
-    padding: 20px;
-    text-align: center;
+    border-bottom: 3px solid #f39c12;
 }
 
-.jogo-header h1 { 
-    font-size: 1.8rem; 
-    margin-bottom: 5px; 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.jogo-header p { 
-    font-size: 0.9rem; 
-    opacity: 0.9; 
-    margin-bottom: 15px; 
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* PAINEL DE PONTOS E STATUS */
+.logo-icon {
+    font-size: 1.8rem;
+}
+
+.jogo-header h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(to right, #fff, #fbd46d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    background: rgba(255,255,255,0.1);
+    padding: 3px 12px;
+    border-radius: 30px;
+}
+
+.meta-lixos {
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.15);
+    padding: 3px 14px;
+    border-radius: 30px;
+    color: #fbd46d;
+}
+
 .painel-status {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px 20px;
-    border-radius: 10px;
-    min-height: 54px;
+    gap: 12px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 40px;
+    margin-top: 10px;
+    border: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
 }
 
 .pontos-box {
-    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
     font-size: 1.1rem;
-    background: #f07b3f;
-    padding: 5px 15px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #f07b3f, #e67e22);
+    padding: 3px 16px;
+    border-radius: 40px;
+    box-shadow: 0 4px 15px rgba(240, 123, 63, 0.3);
     white-space: nowrap;
+}
+
+.barra-progresso-container {
+    flex: 1;
+    min-width: 100px;
+    height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.barra-progresso {
+    height: 100%;
+    background: linear-gradient(90deg, #f1c40f, #2ecc71);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+    width: 0%;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
 }
 
 .mensagem-box {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #fbd46d;
     text-align: right;
-    max-width: 75%;
+    max-width: 55%;
+    transition: 0.3s;
+    padding: 2px 10px;
 }
 
-/* CENÁRIO DA PRAIA MELHORADO */
+/* ===== CENÁRIO ===== */
 .cenario-praia {
-    height: 400px; /* Aumentamos o espaço para acomodar os novos elementos */
-    background: linear-gradient(to bottom, 
-        #2980b9 0%,   /* Mar profundo */
-        #3498db 35%,  /* Mar raso/ondas */
-        #f1c40f 40%,  /* Areia molhada */
-        #f39c12 55%,  /* Areia firme da praia */
-        #e67e22 100%  /* Areia seca/restinga */
-    );
+    height: 460px;
     position: relative;
     overflow: hidden;
-    border-bottom: 4px solid #d35400;
+    border-bottom: 4px solid #8a6b3a;
 }
 
-.instrucao-inicial {
+/* Céu */
+.ceu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(to bottom,
+        #1a3a6a 0%,
+        #4a90d9 30%,
+        #6bb3f0 55%,
+        #87ceeb 70%
+    );
+    z-index: 0;
+}
+
+/* Sol */
+.sol {
     position: absolute;
     top: 15px;
+    right: 25px;
+    font-size: 3.5rem;
+    z-index: 2;
+    animation: pulseSol 3s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 30px #f9d71c);
+}
+
+@keyframes pulseSol {
+    0% { transform: scale(1); filter: drop-shadow(0 0 20px #f9d71c); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 50px #f9d71c); }
+}
+
+/* Nuvens */
+.nuvem {
+    position: absolute;
+    font-size: 2.8rem;
+    opacity: 0.5;
+    z-index: 2;
+    animation: moverNuvem 30s linear infinite;
+}
+
+.nuvem1 { top: 8px; left: -80px; animation-duration: 32s; }
+.nuvem2 { top: 35px; left: -180px; animation-duration: 38s; animation-delay: 6s; font-size: 2.2rem; }
+.nuvem3 { top: 20px; left: -280px; animation-duration: 26s; animation-delay: 12s; font-size: 2.5rem; }
+
+@keyframes moverNuvem {
+    0% { transform: translateX(0); opacity: 0.4; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateX(1050px); opacity: 0.3; }
+}
+
+/* Pássaros */
+.passaro {
+    position: absolute;
+    font-size: 1.6rem;
+    z-index: 3;
+    animation: voar 8s ease-in-out infinite;
+}
+
+.passaro1 { top: 25px; left: 15%; animation-delay: 0s; }
+.passaro2 { top: 50px; left: 45%; animation-delay: 3s; font-size: 1.3rem; }
+
+@keyframes voar {
+    0% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50px, -20px) scale(1.1); }
+    50% { transform: translate(100px, 0) scale(1); }
+    75% { transform: translate(50px, 20px) scale(1.1); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Mar */
+.mar {
+    position: absolute;
+    bottom: 30%;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(to bottom,
+        rgba(30, 144, 200, 0.6) 0%,
+        rgba(20, 100, 160, 0.8) 50%,
+        rgba(10, 70, 120, 0.9) 100%
+    );
+    z-index: 1;
+}
+
+/* Ondas */
+.onda {
+    position: absolute;
+    font-size: 2.2rem;
+    z-index: 2;
+    opacity: 0.3;
+    animation: ondaMov 4s ease-in-out infinite alternate;
+}
+
+.onda1 { bottom: 32%; left: -20px; animation-delay: 0s; }
+.onda2 { bottom: 28%; left: 30%; animation-delay: 1.2s; font-size: 1.8rem; }
+.onda3 { bottom: 26%; right: 10%; animation-delay: 2.5s; font-size: 2rem; }
+
+@keyframes ondaMov {
+    0% { transform: translateX(0) scale(1); }
+    100% { transform: translateX(40px) scale(1.08); }
+}
+
+/* Espuma */
+.espuma {
+    position: absolute;
+    bottom: 29%;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right,
+        transparent 0%,
+        rgba(255,255,255,0.3) 20%,
+        rgba(255,255,255,0.6) 50%,
+        rgba(255,255,255,0.3) 80%,
+        transparent 100%
+    );
+    z-index: 3;
+    animation: espumaMov 3s ease-in-out infinite alternate;
+}
+
+@keyframes espumaMov {
+    0% { opacity: 0.3; transform: scaleX(1); }
+    100% { opacity: 0.7; transform: scaleX(1.05); }
+}
+
+/* Areia */
+.areia {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to bottom,
+        #deb887 0%,
+        #d4a574 20%,
+        #c9a06e 45%,
+        #b8954e 70%,
+        #a0803a 100%
+    );
+    z-index: 1;
+    border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+}
+
+/* Vegetação */
+.coqueiro {
+    position: absolute;
+    font-size: 4.5rem;
+    z-index: 4;
+    filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.2));
+}
+
+.coqueiro1 { bottom: 18%; left: 2%; }
+.coqueiro2 { bottom: 20%; right: 2%; }
+
+.planta {
+    position: absolute;
+    font-size: 2rem;
+    z-index: 4;
+    opacity: 0.7;
+}
+
+.planta1 { bottom: 22%; left: 12%; }
+.planta2 { bottom: 25%; right: 12%; }
+
+/* Estruturas */
+.guarda-sol {
+    position: absolute;
+    font-size: 3.8rem;
+    z-index: 4;
+    filter: drop-shadow(2px 4px 12px rgba(0,0,0,0.15));
+}
+
+.guarda-sol1 { bottom: 32%; left: 18%; }
+.guarda-sol2 { bottom: 35%; right: 20%; }
+
+.barraca {
+    position: absolute;
+    font-size: 3.2rem;
+    z-index: 4;
+    bottom: 30%;
+    left: 42%;
+    filter: drop-shadow(2px 4px 12px rgba(0,0,0,0.15));
+}
+
+/* Pessoas */
+.pessoa {
+    position: absolute;
+    font-size: 2.5rem;
+    z-index: 4;
+    filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1));
+}
+
+.pessoa1 { bottom: 32%; left: 30%; }
+.pessoa2 { bottom: 30%; right: 32%; }
+.pessoa3 { bottom: 50%; right: 18%; font-size: 2rem; }
+.pessoa4 { bottom: 28%; left: 55%; font-size: 2.2rem; }
+
+/* Caminho de madeira */
+.caminho {
+    position: absolute;
+    bottom: 15%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    padding: 6px 15px;
-    border-radius: 30px;
-    font-weight: 600;
-    color: #2d3436;
-    font-size: 0.85rem;
-    z-index: 5;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    width: 60%;
+    height: 4px;
+    background: repeating-linear-gradient(
+        90deg,
+        #8a6b3a 0px,
+        #8a6b3a 20px,
+        #a0803a 20px,
+        #a0803a 25px
+    );
+    z-index: 3;
+    opacity: 0.4;
+    border-radius: 2px;
 }
 
-/* ELEMENTOS DE DECORAÇÃO FIXOS (CENÁRIO) */
-.decoracao {
+/* Placa aviso */
+.placa-aviso {
     position: absolute;
-    user-select: none;
-    opacity: 0.9;
-    z-index: 2; /* Ficam no fundo, o lixo clicável vai aparecer na frente deles */
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    z-index: 5;
+    border-left: 3px solid #f39c12;
+    line-height: 1.5;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
-/* Posicionamento dos personagens e guarda-sóis */
-.surfista { font-size: 3rem; top: 60px; left: 15%; transform: rotate(-5deg); }
-.nadador { font-size: 2.2rem; top: 40px; right: 20px; }
-.guardasol-1 { font-size: 3.5rem; top: 180px; left: 10%; }
-.guardasol-2 { font-size: 3.5rem; top: 220px; right: 15%; }
-.banhista { font-size: 2.5rem; top: 250px; left: 35%; }
+.placa-aviso span:last-child {
+    font-size: 0.6rem;
+    opacity: 0.7;
+}
 
-/* ITENS DE LIXO GERADOS DINAMICAMENTE PELO JS */
+/* ===== TELA DE INÍCIO ===== */
+.tela-inicio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.8s ease;
+}
+
+.tela-inicio.escondida {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.inicio-content {
+    background: linear-gradient(145deg, #ffffff, #f0f2f5);
+    padding: 40px 50px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    animation: subirVitoria 0.6s ease;
+}
+
+@keyframes subirVitoria {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.inicio-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.inicio-content h2 {
+    font-size: 2.2rem;
+    color: #1a3a6a;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, #1a3a6a, #f39c12);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.inicio-content p {
+    color: #34495e;
+    font-size: 1rem;
+    margin: 4px 0;
+}
+
+.inicio-descricao {
+    margin: 16px 0 24px !important;
+    font-size: 0.9rem !important;
+    line-height: 1.8;
+}
+
+.inicio-descricao strong {
+    color: #1e56a0;
+}
+
+.btn-iniciar {
+    background: linear-gradient(135deg, #27ae60, #1a7a42);
+    color: white;
+    border: none;
+    padding: 14px 50px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 20px rgba(39, 174, 96, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-iniciar:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 35px rgba(39, 174, 96, 0.4);
+}
+
+/* ===== TELA DE VITÓRIA ===== */
+.tela-vitoria {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.8s ease;
+}
+
+.tela-vitoria.mostrar {
+    display: flex !important;
+}
+
+.vitoria-content {
+    background: linear-gradient(145deg, #ffffff, #f0f2f5);
+    padding: 40px 50px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    animation: subirVitoria 0.6s ease;
+}
+
+.vitoria-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.vitoria-content h2 {
+    font-size: 2rem;
+    color: #1a3a6a;
+    margin-bottom: 8px;
+}
+
+.vitoria-content p {
+    color: #34495e;
+    font-size: 1rem;
+    margin: 6px 0;
+}
+
+.vitoria-pontos {
+    font-size: 1.4rem !important;
+    font-weight: 700;
+    color: #f07b3f !important;
+    margin: 12px 0 !important;
+}
+
+.vitoria-pontos span {
+    font-size: 1.8rem;
+    color: #e67e22;
+}
+
+.vitoria-mensagem {
+    font-style: italic;
+    color: #2c3e50 !important;
+    margin: 10px 0 20px !important;
+}
+
+.btn-reiniciar {
+    background: linear-gradient(135deg, #1e56a0, #0a3d62);
+    color: white;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 20px rgba(30, 86, 160, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-reiniciar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(30, 86, 160, 0.4);
+}
+
+/* ===== LIXO ===== */
 .lixo-item {
-    font-size: 2.5rem;
     position: absolute;
     cursor: pointer;
-    transition: transform 0.2s, filter 0.2s;
+    z-index: 10;
+    font-size: 2.6rem;
+    filter: drop-shadow(2px 4px 12px rgba(0,0,0,0.35));
+    transition: transform 0.2s ease, filter 0.2s ease;
+    animation: aparecerLixo 0.5s ease-out;
     user-select: none;
-    z-index: 10; /* Ficam por cima de tudo para garantir um clique fácil */
+    pointer-events: auto;
+}
+
+@keyframes aparecerLixo {
+    0% { transform: scale(0) rotate(180deg); opacity: 0; }
+    60% { transform: scale(1.2) rotate(-8deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 .lixo-item:hover {
-    transform: scale(1.2);
+    transform: scale(1.3) rotate(-5deg);
+    filter: drop-shadow(0 0 25px rgba(241, 196, 15, 0.5));
 }
 
-/* Classe de destaque quando o lixo é selecionado */
 .lixo-item.selecionado {
-    filter: drop-shadow(0 0 10px #f07b3f) brightness(1.2);
-    animation: balanco 0.5s infinite alternate;
+    filter: drop-shadow(0 0 30px #f39c12) brightness(1.2);
+    animation: balanco 0.5s infinite alternate ease-in-out;
 }
 
 @keyframes balanco {
-    from { transform: rotate(-12deg) scale(1.15); }
-    to { transform: rotate(12deg) scale(1.15); }
+    0% { transform: rotate(-10deg) scale(1.1); }
+    100% { transform: rotate(10deg) scale(1.1); }
 }
 
-/* ZONA DAS LIXEIRAS (RODAPÉ) */
+/* ===== LIXEIRAS ===== */
 .zona-lixeiras {
-    background: #f5f6fa;
-    padding: 25px;
-    display: flex;
-    justify-content: space-around;
-    gap: 15px;
+    background: linear-gradient(to bottom, #2c3e50, #1a2632);
+    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    border-top: 4px solid #f39c12;
 }
 
 .lixeira {
-    flex: 1;
     border: none;
-    border-radius: 15px;
-    padding: 15px;
+    border-radius: 14px;
+    padding: 12px 6px 10px;
     color: white;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    gap: 2px;
+    transition: 0.25s ease;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.4);
+    font-family: 'Poppins', sans-serif;
+    min-height: 85px;
 }
 
 .lixeira:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
 .lixeira:active {
-    transform: translateY(0);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.4);
 }
 
-/* Cores oficiais da Coleta Seletiva */
-.lixeira-organico { background-color: #8b5a2b; } /* Marrom */
-.lixeira-reciclavel { background-color: #2ecc71; } /* Verde */
-.lixeira-rejeito { background-color: #7f8c8d; }    /* Cinza */
+.lixeira-organico { background: linear-gradient(145deg, #6b4c3b, #4d3428); }
+.lixeira-reciclavel { background: linear-gradient(145deg, #27ae60, #1a7a42); }
+.lixeira-eletronico { background: linear-gradient(145deg, #8e44ad, #6c3483); }
+.lixeira-rejeito { background: linear-gradient(145deg, #7f8c8d, #5d6d7e); }
 
-.lixeira-icone { font-size: 2.2rem; }
-.lixeira-nome { font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.lixeira-icone {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+
+.lixeira-nome {
+    font-weight: 800;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lixeira-exemplo {
+    font-size: 0.5rem;
+    opacity: 0.7;
+    font-weight: 400;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .jogo-container { max-width: 100%; border-radius: 16px; }
+    .jogo-header { padding: 10px 14px; }
+    .jogo-header h1 { font-size: 1.2rem; }
+    .header-stats { gap: 8px; }
+    .subtitle { display: none; }
+    .meta-lixos { font-size: 0.7rem; padding: 2px 10px; }
+    .cenario-praia { height: 380px; }
+    .painel-status { flex-wrap: wrap; gap: 6px; padding: 6px 12px; }
+    .mensagem-box { font-size: 0.7rem; max-width: 100%; text-align: center; }
+    .barra-progresso-container { min-width: 60px; }
+    .zona-lixeiras { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 10px; }
+    .lixeira { min-height: 65px; padding: 8px 4px; }
+    .lixeira-icone { font-size: 1.6rem; }
+    .lixeira-exemplo { display: none; }
+    .lixo-item { font-size: 2rem; }
+    .coqueiro2, .pessoa2, .pessoa3, .pessoa4 { display: none; }
+    .guarda-sol2 { display: none; }
+    .barraca { font-size: 2.5rem; left: 35%; }
+    .sol { font-size: 2.8rem; right: 15px; top: 10px; }
+    .vitoria-content, .inicio-content { padding: 30px 25px; }
+    .vitoria-content h2, .inicio-content h2 { font-size: 1.5rem; }
+    .placa-aviso { display: none; }
+    .btn-iniciar { padding: 12px 30px; font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+    .cenario-praia { height: 320px; }
+    .zona-lixeiras { grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; }
+    .lixeira { min-height: 55px; padding: 6px 2px; }
+    .lixeira-nome { font-size: 0.55rem; }
+    .lixeira-icone { font-size: 1.4rem; }
+    .lixo-item { font-size: 1.6rem; }
+    .coqueiro { font-size: 3rem; }
+    .coqueiro1 { bottom: 15%; left: 0; }
+    .guarda-sol1 { font-size: 2.8rem; bottom: 28%; left: 12%; }
+    .pessoa1 { font-size: 2rem; bottom: 28%; left: 25%; }
+    .sol { font-size: 2.2rem; }
+    .vitoria-content, .inicio-content { padding: 20px 16px; }
+    .vitoria-content h2, .inicio-content h2 { font-size: 1.2rem; }
+    .vitoria-icon, .inicio-icon { font-size: 3rem; }
+    .btn-reiniciar, .btn-iniciar { padding: 10px 24px; font-size: 0.85rem; }
+    .barra-progresso-container { min-width: 40px; height: 6px; }
+    .pontos-box { font-size: 0.9rem; padding: 2px 12px; }
+    .inicio-descricao { font-size: 0.8rem !important; }
+}
